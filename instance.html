@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thực thể vue</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <style>
+        .form-group{
+            display: flex;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="title col-md-12 text-center" style="margin:20px 0px 40px 0px;">
+                <h3>Quản lý công việc</h3>
+            </div>
+            <div class="form-conten">
+                <h4 style="margin:20px 10px;">Thêm công việc vào danh sách</h4>
+                <form class="form-horizontal" action="#" method="post">
+                    <fieldset>
+                        <!-- Name input-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="name">Tiêu đề</label>
+                            <div class="col-md-6">
+                                <input id="title" name="title" type="text" v-model="task.title"  class="form-control"></div>
+                        </div>                        
+                        <!-- Message body -->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="message">Chi tiết công việc</label>
+                            <div class="col-md-6">
+                                <textarea class="form-control resize_vertical" id="content" name="content"  v-model="task.content"  rows="5"></textarea>
+                            </div>
+                        </div>                        
+                        <div class="form-group">
+                                <label class="col-md-2 control-label">Độ ưu tiên</label>
+                                <div class="col-md-2">
+                                        <select class=" form-control" v-model="task.status">
+                                            <option selected="true" value="">Chọn</option>
+                                            <option value="1">1 - Cấp độ 1</option>
+                                            <option value="2">2 - Cấp độ 2</option>
+                                            <option value="3">3 - Cấp độ 3</option>
+                                            <option value="4">4 - Cấp độ 4</option>
+                                            <option value="5">5 - Cấp độ 5</option>
+                                        </select>
+                                </div>
+                                
+                            </div>
+                        <!-- Form actions -->
+                        <div class="form-group">
+                            <div class="col-md-12 text-center">
+                                <a style="color:#fff;"  class="btn btn-responsive btn-success btn-sm" v-on:click="addTask">+ Thêm</a>
+                                <a style="background: #ccc; color: #fff;" class="btn btn-responsive btn-default btn-sm">x Xóa</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="container">
+                <div class="col-md-12">
+                        <!-- BEGIN SAMPLE TABLE PORTLET-->
+                        <div class="portlet box primary">
+                            <div class="portlet-title" style="margin:20px;">
+                                <div class="caption">
+                                    Danh sách công việc
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="table-scrollable">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Tiêu đề</th>
+                                                <th>Trạng thái</th>
+                                                <th>Độ ưu tiên</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item, index) in listTask">
+                                                <td>{{ index + 1}}</td>
+                                                <td>{{item.title}}</td>
+                                                <td></td>
+                                                <td>{{item.status}}</td>
+                                                <td>
+                                                    <span class="label label-sm label-success">Approved</span>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SAMPLE TABLE PORTLET-->
+                    </div>
+        </div>
+        
+    </div>
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: "#app",
+            data: {
+                task: {
+                    title: '',
+                    content: '',
+                    status: ''
+                },
+                listTask: [] 
+            },
+            methods: {
+                addTask() {                    
+                    
+                    if(this.task.title == '' || this.task.content == '' || this.status == ''){
+                        alert('Bạn chưa nhập đầy đủ thông tin');
+                        return;
+                    } else {
+                        this.listTask.push(this.task);
+                        this.task = {
+                            title: '',
+                            content: '',
+                            status: ''
+                        }
+                    }                                                        
+                    
+                }
+            }
+
+        });
+    </script>
+</body>
+</html>
